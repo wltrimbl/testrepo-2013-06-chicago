@@ -1,0 +1,24 @@
+#!/bin/bash
+ARGS="$@"
+if [ -t 1 ] 
+  then
+  for i in $ARGS
+     do 
+	if [ ! -e $i ]  
+           then 
+           echo "File $i not found! "
+        else
+       
+           NEW="${i/%.fastq/.fasta}"
+           NEW="${NEW/%.fq/.fasta}"
+           NEW="${NEW/%.txt/.fasta}"
+           echo "Converting $i to $NEW " 1>&2
+           if [ $i == $NEW ] 
+              then
+                echo abort! Refuse to overwrite input
+              else
+                fq2fa.py $i  $NEW
+              fi
+        fi
+     done
+   fi
